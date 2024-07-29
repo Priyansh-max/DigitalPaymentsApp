@@ -28,10 +28,6 @@ function Dashboard(){
             <DisplayUser username={"User3"}></DisplayUser>
             <DisplayUser username={"User4"}></DisplayUser>
             <DisplayUser username={"User5"}></DisplayUser>
-
-            
-
-            
         </div>
     )
 }
