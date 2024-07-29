@@ -14,7 +14,7 @@ function Dashboard(){
                     </div>
                 </div>
             </div>
-            <div class="border-t-2 border-gray-300"></div>
+            <div className="border-t-2 border-gray-300"></div>
             
             <p className="px-4 pb-4 pt-4 text-xl font-bold">Your Current balance - 5000₹</p>
             <p className="px-4 pb-4 pt-4 text-xl font-bold">Users</p>
