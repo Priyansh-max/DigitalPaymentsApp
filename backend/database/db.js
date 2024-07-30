@@ -1,9 +1,9 @@
-const connection = require("../config")
+const { connectionurl } = require("../config")
 const mongoose = require("mongoose");
 
 
 //this is a promise syntax .then will wait for the promise to resolve then the code goes forwardd
-mongoose.connect(connection)
+mongoose.connect(connectionurl)
 .then(() => console.log("MongoDb connectedd"))
 .catch(err => console.error("MongoDb connection error", err));
 
@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
         trim : true,
         lowercase : true,
         minLenght : 6,
-        maxLength : 10,
+        maxLength : 50,
     },
     password : {
         type : String,
@@ -55,7 +55,7 @@ const BankSchema = new mongoose.Schema({
 
 const Account = mongoose.model("Account" , BankSchema);
 
-module.exports({
+module.exports = {
     User,
     Account
-})
+}

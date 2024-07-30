@@ -1,4 +1,4 @@
-import { secret } from "../config"
+const { secret } = require("../config")
 
 const authmiddleware = (req,res,next) => {
     const authheader = req.headers.authorization;
@@ -10,7 +10,7 @@ const authmiddleware = (req,res,next) => {
     const token = authheader.split(' ')[1];
 
     try{
-        const decode = jwt.decode(token , secret)
+        const decode = jwt.verify(token , secret)
 
         req.userId = decode.userId //req me userId dalke bheja haii us route me jaha pe bhi authmiddleware use hoga
 

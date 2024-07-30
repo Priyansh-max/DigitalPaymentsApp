@@ -1,10 +1,10 @@
-import { User , Account } from '../database/db'
-import { secret } from '../config'
-import { authMiddleware } from '../middleware/authmiddleware'
+const { User, Account } = require('../database/db');
+const { secret } = require("../config")
+const authmiddleware = require("../middleware/authmiddleware")
 const zod = require('zod');
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const router = express.Router;
+const router = express.Router();
 const app = express();
 
 app.use(express.json()); //body parser middleware
@@ -28,16 +28,22 @@ const updatebody = zod.object({
 })
 
 router.post('/signup' ,async (req , res) => {
+    console.log("HI");
+    console.log(req.body.username);
+
     const username = req.body.username;
     const password = req.body.password;
     const firstname = req.body.firstname;
     const lastname = req.body.lastname;
 
     const success = signupbody.safeParse(req.body);
+    console.log(success)
 
-    if(!success){
+
+    if(success.success == false){
+        console.log("hereee1");
         return res.status(411).json({
-            message : "Email already taken / incorrect inputs / wrong email"
+            message : "Email already taken / incorrect input format / wrong email"
         })
     }
 
@@ -58,10 +64,11 @@ router.post('/signup' ,async (req , res) => {
         lastname : lastname
     })
 
+
     const Userid = user._id;
 
     await Account.create({
-        UserId : Userid,
+        userId : Userid,
         balance : 1 + Math.random() * 10000
     })
 
@@ -106,7 +113,7 @@ router.post('/signin' , async (req , res) => {
 
 })
 
-router.put('/update' , authMiddleware , async (req , res) => {
+router.put('/update' , authmiddleware , async (req , res) => {
     const success_vali = updatebody.safeParse(req.body);
 
     if(!success_vali){
@@ -123,7 +130,7 @@ router.put('/update' , authMiddleware , async (req , res) => {
 })
 
 //to find friendss
-router.get("/bulk" ,async (req , res) => {
+router.get("/bulk" ,authmiddleware , async (req , res) => {
     const filter = req.query.filter || "";
 
     const users = await User.find({
